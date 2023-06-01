@@ -85,7 +85,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group w-50">
                             <label>Теги</label>
                             <select name="tag_ids[]" class="select2" multiple="multiple" data-placeholder="Выберите теги" style="width: 100%;">
                                 @foreach($tags as $tag)
