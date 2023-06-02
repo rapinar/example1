@@ -40,6 +40,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')-> group (functi
         Route::delete('/{tag}', 'DeleteController@DeleteTag')->name('admin.tag.delete');
     });
 
+    Route::prefix('/users')->namespace('User')-> group (function() {
+        Route::get('/', 'UserIndexController@IndexUser')->name('admin.user.index');
+        Route::get('/create', 'CreateController@CreateUser')->name('admin.user.create');
+        Route::post('/', 'StoreController@StoreUser')->name('admin.user.store');
+        Route::get('/{user}', 'ShowController@ShowUser')->name('admin.user.show');
+        Route::get('/{user}/edit', 'EditController@EditUser')->name('admin.user.edit');
+        Route::patch('/{user}', 'UpdateController@UpdateUser')->name('admin.user.update');
+        Route::delete('/{user}', 'DeleteController@DeleteUser')->name('admin.user.delete');
+    });
+
 });
 
     /* Route::prefix('/admin')->namespace('App\Http\Controllers\Admin\Category')-> group (function(){

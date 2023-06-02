@@ -84,10 +84,10 @@
                                     >{{ $category->title }}</option>
                                 @endforeach
                             </select>
-                        </div>
                                 @error('category_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
+                        </div>
                         <div class="form-group w-50">
                             <label>Теги</label>
                             <select name="tag_ids[]" class="select2" multiple="multiple" data-placeholder="Выберите теги" style="width: 100%;">

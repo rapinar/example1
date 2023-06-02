@@ -36,7 +36,9 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Это поле необходимо заполнить',
-            'content.string' => 'Это поле необходимо заполнить',
+            'title.string' => 'Данные должны соответствовать строчному типу',
+            'content.required' => 'Это поле необходимо заполнить',
+            'content.string' => 'Данные должны соответствовать строчному типу',
             'preview_image.required' => 'Это поле необходимо заполнить',
             'preview_image.file' => 'Необходимо выбрать файл',
             'main_image.required' => 'Это поле необходимо заполнить',
