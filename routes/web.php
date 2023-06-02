@@ -7,7 +7,7 @@ Route::controller(IndexController::class)->group(function () {
 });
 
 
-Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')-> group (function() {
+Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/', 'Main\AdminController@ShowDashboard');
 
     Route::prefix('/posts')->namespace('Post')-> group (function() {
