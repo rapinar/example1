@@ -9,13 +9,17 @@ Route::controller(IndexController::class)->group(function () {
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix'=> 'personal', 'middleware' => ['auth', 'verified']], function() {
     Route::get('/', 'Main\PersonalController@ShowDashboard')->name('personal.main.index');
 
-    Route::prefix('/liked')->namespace('Liked')-> group (function() {
+    Route::prefix('/liked')->namespace('Liked')->group(function () {
         Route::get('/', 'LikedController@LikedPost')->name('personal.liked.index');
         Route::delete('/{post}', 'DeleteController@DeletePost')->name('personal.liked.delete');
     });
 
-
-    Route::get('/comment', 'Comment\CommentController@ShowComment')->name('personal.comment.index');
+    Route::prefix('/comment')->namespace('Comment')->group(function () {
+        Route::get('/', 'CommentController@ShowComment')->name('personal.comment.index');
+        Route::get('/{comment}/edit', 'EditController@EditComment')->name('personal.comment.edit');
+        Route::patch('/{comment}', 'UpdateController@UpdateComment')->name('personal.comment.update');
+        Route::delete('/{comment}', 'DeleteController@DeleteComment')->name('personal.comment.delete');
+    });
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', 'middleware' => ['auth', 'admin', 'verified']], function() {
@@ -31,7 +35,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', '
         Route::delete('/{post}', 'DeleteController@DeletePost')->name('admin.post.delete');
     });
 
-    Route::prefix('/categories')->namespace('Category')-> group (function() {
+    Route::prefix('/categories')->namespace('Comment')-> group (function() {
         Route::get('/', 'CategoryIndexController@IndexCategory')->name('admin.category.index');
         Route::get('/create', 'CreateController@CreateCategory')->name('admin.category.create');
         Route::post('/', 'StoreController@StoreCategory')->name('admin.category.store');
@@ -63,7 +67,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', '
 
 });
 
-    /* Route::prefix('/admin')->namespace('App\Http\Controllers\Admin\Category')-> group (function(){
+    /* Route::prefix('/admin')->namespace('App\Http\Controllers\Admin\Comment')-> group (function(){
         Route::get('/categories','CategoryIndexController@ShowCategory');
 }); */
 
