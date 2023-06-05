@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::controller(IndexController::class)->group(function () {
-    Route::get('/', 'App\Http\Controllers\Main\IndexController');
+    Route::get('/', 'App\Http\Controllers\Main\IndexController')->name('main.index');
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix'=> 'personal', 'middleware' => ['auth', 'verified']], function() {
