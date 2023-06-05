@@ -8,7 +8,13 @@ Route::controller(IndexController::class)->group(function () {
 
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix'=> 'personal', 'middleware' => ['auth', 'verified']], function() {
     Route::get('/', 'Main\PersonalController@ShowDashboard')->name('personal.main.index');
-    Route::get('/liked', 'Liked\LikedController@LikedPost')->name('personal.liked.index');
+
+    Route::prefix('/liked')->namespace('Liked')-> group (function() {
+        Route::get('/', 'LikedController@LikedPost')->name('personal.liked.index');
+        Route::delete('/{post}', 'DeleteController@DeletePost')->name('personal.liked.delete');
+    });
+
+
     Route::get('/comment', 'Comment\CommentController@ShowComment')->name('personal.comment.index');
 });
 
