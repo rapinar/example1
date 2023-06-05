@@ -6,9 +6,14 @@ Route::controller(IndexController::class)->group(function () {
     Route::get('/', 'App\Http\Controllers\Main\IndexController');
 });
 
+Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix'=> 'personal', 'middleware' => ['auth', 'verified']], function() {
+    Route::get('/', 'Main\PersonalController@ShowDashboard')->name('personal.main.index');
+    Route::get('/liked', 'Liked\LikedController@LikedPost')->name('personal.liked.index');
+    Route::get('/comment', 'Comment\CommentController@ShowComment')->name('personal.comment.index');
+});
 
-Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', 'middleware' => ['auth', 'admin']], function() {
-    Route::get('/', 'Main\AdminController@ShowDashboard');
+Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', 'middleware' => ['auth', 'admin', 'verified']], function() {
+    Route::get('/', 'Main\AdminController@ShowDashboard')->name('admin.main.index');
 
     Route::prefix('/posts')->namespace('Post')-> group (function() {
         Route::get('/', 'PostIndexController@IndexPost')->name('admin.post.index');
@@ -56,5 +61,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', '
         Route::get('/categories','CategoryIndexController@ShowCategory');
 }); */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
