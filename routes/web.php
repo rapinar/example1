@@ -6,6 +6,11 @@ Route::controller(IndexController::class)->group(function () {
     Route::get('/', 'App\Http\Controllers\Main\IndexController')->name('main.index');
 });
 
+Route::group(['namespace' => 'App\Http\Controllers\Post', 'prefix'=> 'posts'], function() {
+    Route::get('/', 'IndexController')->name('post.index');
+    Route::get('/{post}', 'ShowController')->name('post.show');
+});
+
 Route::group(['namespace' => 'App\Http\Controllers\Personal', 'prefix'=> 'personal', 'middleware' => ['auth', 'verified']], function() {
     Route::get('/', 'Main\PersonalController@ShowDashboard')->name('personal.main.index');
 
@@ -35,7 +40,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', '
         Route::delete('/{post}', 'DeleteController@DeletePost')->name('admin.post.delete');
     });
 
-    Route::prefix('/categories')->namespace('Comment')-> group (function() {
+    Route::prefix('/categories')->namespace('Category')-> group (function() {
         Route::get('/', 'CategoryIndexController@IndexCategory')->name('admin.category.index');
         Route::get('/create', 'CreateController@CreateCategory')->name('admin.category.create');
         Route::post('/', 'StoreController@StoreCategory')->name('admin.category.store');
@@ -66,10 +71,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix'=> 'admin', '
     });
 
 });
-
-    /* Route::prefix('/admin')->namespace('App\Http\Controllers\Admin\Comment')-> group (function(){
-        Route::get('/categories','CategoryIndexController@ShowCategory');
-}); */
 
 Auth::routes(['verify' => true]);
 
